@@ -1,0 +1,3 @@
+[submodule "understanding-nlp-classification"]
+	path = understanding-nlp-classification
+	url = https://github.com/adamkurth/understanding-nlp-classification.git
