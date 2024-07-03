@@ -1,3 +1,6 @@
 [submodule "understanding-nlp-classification"]
 	path = understanding-nlp-classification
 	url = https://github.com/adamkurth/understanding-nlp-classification.git
+[submodule "understanding-clinical-trials"]
+	path = understanding-clinical-trials
+	url = https://github.com/adamkurth/understanding-clinical-trials.git
