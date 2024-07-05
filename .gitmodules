@@ -4,3 +4,6 @@
 [submodule "understanding-clinical-trials"]
 	path = understanding-clinical-trials
 	url = https://github.com/adamkurth/understanding-clinical-trials.git
+[submodule "understanding-biostat-poisson-tests"]
+	path = understanding-biostat-poisson-tests
+	url = https://github.com/username/understanding-biostat-poisson-tests.git
