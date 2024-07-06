@@ -28,3 +28,30 @@
 [submodule "reinforcement_snake_game"]
 	path = reinforcement_snake_game
 	url = https://github.com/adamkurth/reinforcement_snake_game
+[submodule "understand-astar-search"]
+	path = understand-astar-search
+	url = https://github.com/adamkurth/understand-astar-search
+[submodule "understand-liver-segmentation"]
+	path = understand-liver-segmentation
+	url = https://github.com/adamkurth/understand-liver-segmentation
+[submodule "understand-jockey-logistic-sim"]
+	path = understand-jockey-logistic-sim
+	url = https://github.com/adamkurth/understand-jockey-logistic-sim
+[submodule "understand-kriging"]
+	path = understand-kriging
+	url = https://github.com/adamkurth/understand-kriging
+[submodule "understand-marching-cubes"]
+	path = understand-marching-cubes
+	url = https://github.com/adamkurth/understand-marching-cubes
+[submodule "understand-reinforcement-learning"]
+	path = understand-reinforcement-learning
+	url = https://github.com/adamkurth/understand-reinforcement-learning
+[submodule "understand-poisson-tests"]
+	path = understand-poisson-tests
+	url = https://github.com/adamkurth/understand-poisson-tests
+[submodule "understand-clinical-trails"]
+	path = understand-clinical-trails
+	url = https://github.com/adamkurth/understand-clinical-trails
+[submodule "understand-nlp-classification"]
+	path = understand-nlp-classification
+	url = https://github.com/adamkurth/understand-nlp-classification
