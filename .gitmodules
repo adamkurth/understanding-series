@@ -7,3 +7,24 @@
 [submodule "understanding-biostat-poisson-tests"]
 	path = understanding-biostat-poisson-tests
 	url = https://github.com/adamkurth/understanding-biostat-poisson-tests.git
+[submodule "A_star"]
+	path = A_star
+	url = https://github.com/adamkurth/A_star
+[submodule "ct_segmentation"]
+	path = ct_segmentation
+	url = https://github.com/adamkurth/ct_segmentation
+[submodule "jockey_logistic_regression"]
+	path = jockey_logistic_regression
+	url = https://github.com/adamkurth/jockey_logistic_regression
+[submodule "kriging_model"]
+	path = kriging_model
+	url = https://github.com/adamkurth/kriging_model
+[submodule "marching_cubes_demo"]
+	path = marching_cubes_demo
+	url = https://github.com/adamkurth/marching_cubes_demo
+[submodule "understand-neural-networks-numpy/reinforcement_snake_game"]
+	path = understand-neural-networks-numpy/reinforcement_snake_game
+	url = https://github.com/adamkurth/reinforcement_snake_game
+[submodule "reinforcement_snake_game"]
+	path = reinforcement_snake_game
+	url = https://github.com/adamkurth/reinforcement_snake_game
