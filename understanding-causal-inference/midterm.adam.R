@@ -153,6 +153,7 @@ print(round(c(tau.naive, tau.right,tau.ml, mean(y1[x4 == 1]) - mean(y0[x4 == 1])
 # instrument?
 
 # x3 is a valid instrument because it is exogeneous and x1 is a collider, where x2 and x3 feed into x1.
+# all the backdoor paths are blocked as we are not conditioning on x1 which is a collider, and x3 is exogeneous
 # therefore, x3 can be used as an instrument because we can meddle with x3 and see how it affects response y through x1.
 
 
@@ -162,9 +163,8 @@ tau.iv = (mean(y[x3==1 & x4 == 1]) - mean(y[x3==0 & x4==1])) / (mean(x1[x3==1 & 
 #19. Calculate the IV estimate from the observed data. Does it match the true subgroup 
 # ATE computed above? Why or why not?
 
-# tau.obs = ?
-
-#  the IV estimate is not the same as the true subgroup ATE because x3 is not a valid instrument for x1 in this case
+# the values are not the same, since the condition on x4 is a backdoor path from x1 to Y and therefore the naive estimate is biased
+# the IV estimator actualy estimates the LATE, assuming monotonicity
 
 # from IV estimator formula for tau.iv:
 #
@@ -181,12 +181,12 @@ x1.1 = f1(x2,rep(1,n),eps1)
 x1.0 = f1(x2,rep(0,n),eps1)
 # check monotonicity
 mean(x1.1 >= x1.0)
+# monotonicity is satisfied
 
 # 21. Use the generated potential outcomes, in both Y and D = X1, to compute the (sub-
 # group) local average treatment effect (LATE): E(Y1 −Y0 | D1 − D0 = 1, X4 = 1).
 # Does this match the IV estimate calculated above?
 LATE = mean(y1[x4 == 1 & (x1.1 - x1.0) == 1]) - mean(y0[x4 == 1 & (x1.1 - x1.0) == 1])
-
 print(round(c(tau.iv, LATE),2))
 # No this does not match. The LATE is the true subgroup ATE, but the IV estimator is not the same as the true subgroup ATE
 
