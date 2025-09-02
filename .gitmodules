@@ -34,3 +34,6 @@
 [submodule "understanding-statistical-linear-models"]
 	path = understanding-statistical-linear-models
 	url = git@github.com:adamkurth/understanding-statistical-linear-models.git
+[submodule "understanding-mcmc"]
+	path = understanding-mcmc
+	url = https://github.com/adamkurth/understanding-mcmc.git
