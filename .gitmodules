@@ -28,7 +28,6 @@
 [submodule "understand-nlp-classification"]
 	path = understand-nlp-classification
 	url = https://github.com/adamkurth/understand-nlp-classification
-
 [submodule "understand-nlp-sentiment-analysis"]
 	path = understand-nlp-sentiment-analysis
 	url = git@github.com:adamkurth/understand-nlp-sentiment-analysis.git
