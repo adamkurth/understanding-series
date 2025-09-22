@@ -8,7 +8,7 @@ from pathlib import Path
 
 # Load and preprocess data
 wd = os.getcwd()
-data = pd.read_csv(Path('/Users/adamkurth/Documents/vscode/code/understanding-series/nn_scratch_project/digit-recognizer/train.csv'))
+data = pd.read_csv(Path('/Users/adamkurth/Documents/vscode/code/understanding-series/understand-neural-networks-numpy/digit-recognizer/train.csv'))
 data = np.array(data)
 m, n = data.shape
 np.random.shuffle(data)
@@ -16,7 +16,7 @@ np.random.shuffle(data)
 # Create dev and train datasets
 data_dev = data[0:1000].T
 Y_dev = data_dev[0]
-X_dev = data_dev[1:n] / 255.
+X_dev = data_dev[1:n] / 255. 
 
 data_train = data[1000:m].T
 Y_train = data_train[0]
@@ -126,10 +126,10 @@ def test_prediction(index, W1, b1, W2, b2):
     plt.imshow(current_image, interpolation='nearest')
     plt.show()
 
-test_prediction(0, W1, b1, W2, b2)
-test_prediction(1, W1, b1, W2, b2)
-test_prediction(2, W1, b1, W2, b2)
-test_prediction(3, W1, b1, W2, b2)
+test_prediction(index=0, W1=W1, b1=b1, W2=W2, b2=b2)
+test_prediction(index=1, W1=W1, b1=b1, W2=W2, b2=b2)
+test_prediction(index=2, W1=W1, b1=b1, W2=W2, b2=b2)
+test_prediction(index=3, W1=W1, b1=b1, W2=W2, b2=b2)
 
 dev_predictions = make_predictions(X_dev, W1, b1, W2, b2)
 print(f"Dev set accuracy: {get_accuracy(dev_predictions, Y_dev):.4f}")
