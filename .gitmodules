@@ -1,39 +1,48 @@
-[submodule "reinforcement_snake_game"]
-	path = reinforcement_snake_game
-	url = https://github.com/adamkurth/reinforcement_snake_game
 [submodule "understand-astar-search"]
 	path = understand-astar-search
-	url = https://github.com/adamkurth/understand-astar-search
-[submodule "understand-liver-segmentation"]
-	path = understand-liver-segmentation
-	url = https://github.com/adamkurth/understand-liver-segmentation
+	url = https://github.com/adamkurth/understand-astar-search.git
+	branch = main
 [submodule "understand-jockey-logistic-sim"]
 	path = understand-jockey-logistic-sim
-	url = https://github.com/adamkurth/understand-jockey-logistic-sim
+	url = https://github.com/adamkurth/understand-jockey-logistic-sim.git
+	branch = main
 [submodule "understand-kriging"]
 	path = understand-kriging
-	url = https://github.com/adamkurth/understand-kriging
+	url = https://github.com/adamkurth/understand-kriging.git
+	branch = main
+[submodule "understand-liver-segmentation"]
+	path = understand-liver-segmentation
+	url = https://github.com/adamkurth/understand-liver-segmentation.git
+	branch = main
 [submodule "understand-marching-cubes"]
 	path = understand-marching-cubes
-	url = https://github.com/adamkurth/understand-marching-cubes
-[submodule "understand-reinforcement-learning"]
-	path = understand-reinforcement-learning
-	url = https://github.com/adamkurth/understand-reinforcement-learning
-[submodule "understand-poisson-tests"]
-	path = understand-poisson-tests
-	url = https://github.com/adamkurth/understand-poisson-tests
-[submodule "understand-clinical-trails"]
-	path = understand-clinical-trails
-	url = https://github.com/adamkurth/understand-clinical-trails
+	url = https://github.com/adamkurth/understand-marching-cubes.git
+	branch = main
 [submodule "understand-nlp-classification"]
 	path = understand-nlp-classification
-	url = https://github.com/adamkurth/understand-nlp-classification
+	url = https://github.com/adamkurth/understand-nlp-classification.git
+	branch = main
 [submodule "understand-nlp-sentiment-analysis"]
 	path = understand-nlp-sentiment-analysis
-	url = git@github.com:adamkurth/understand-nlp-sentiment-analysis.git
-[submodule "understanding-statistical-linear-models"]
-	path = understanding-statistical-linear-models
-	url = git@github.com:adamkurth/understanding-statistical-linear-models.git
+	url = https://github.com/adamkurth/understand-nlp-sentiment-analysis.git
+	branch = main
+[submodule "understand-poisson-tests"]
+	path = understand-poisson-tests
+	url = https://github.com/adamkurth/understand-poisson-tests.git
+	branch = main
+[submodule "understand-reinforcement-learning"]
+	path = understand-reinforcement-learning
+	url = https://github.com/adamkurth/understand-reinforcement-learning.git
+	branch = main
 [submodule "understanding-mcmc"]
 	path = understanding-mcmc
 	url = https://github.com/adamkurth/understanding-mcmc.git
+	branch = main
+[submodule "understanding-statistical-linear-models"]
+	path = understanding-statistical-linear-models
+	url = https://github.com/adamkurth/understanding-statistical-linear-models.git
+	branch = main
+[submodule "understand-neural-networks-numpy"]
+	path = understand-neural-networks-numpy
+	url = https://github.com/adamkurth/understand-neural-networks-numpy.git
+	branch = main
