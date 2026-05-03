@@ -46,3 +46,7 @@
 	path = understand-neural-networks-numpy
 	url = https://github.com/adamkurth/understand-neural-networks-numpy.git
 	branch = main
+[submodule "understand-bayes-nonparametrics"]
+	path = understand-bayes-nonparametrics
+	url = https://github.com/adamkurth/understand-bayes-nonparametrics.git
+	branch = main
