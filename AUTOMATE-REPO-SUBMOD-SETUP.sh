@@ -5,20 +5,47 @@
 #
 # Commands:
 #   create <repo-name>   Create a new GitHub repo and add it as a submodule
-#   update               Update all submodules to latest remote main
-#   status               Show the sync status of every submodule
+#   update                Update all submodules to latest remote main
+#   status                Show the sync status of every submodule
+#   remove <repo-name>    Cleanly de-init and remove a submodule
 #
 # Usage:
 #   ./AUTOMATE-REPO-SUBMOD-SETUP.sh create <new-repo-name>
 #   ./AUTOMATE-REPO-SUBMOD-SETUP.sh update
 #   ./AUTOMATE-REPO-SUBMOD-SETUP.sh status
+#   ./AUTOMATE-REPO-SUBMOD-SETUP.sh remove <repo-name>
+#
+# Env overrides:
+#   UNDERSTANDING_SERIES_DIR   Explicit path to the parent repo, if you don't
+#                              want to rely on auto-detection.
 # ==============================================================================
 
 set -e
 
 # --- Configuration ---
 GITHUB_USERNAME="adamkurth"
-PARENT_REPO_DIR="$HOME/Documents/vscode/code/understanding-series"
+
+# Resolve the parent repo directory without hardcoding a machine-specific path.
+# Priority: explicit env override > the repo containing this script > git toplevel of cwd.
+resolve_parent_repo_dir() {
+    if [ -n "$UNDERSTANDING_SERIES_DIR" ]; then
+        echo "$UNDERSTANDING_SERIES_DIR"
+        return
+    fi
+
+    local script_dir
+    script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    if [ -d "$script_dir/.git" ]; then
+        echo "$script_dir"
+        return
+    fi
+
+    git -C "$script_dir" rev-parse --show-toplevel 2>/dev/null && return
+
+    print_error "Could not locate the understanding-series repo. Set UNDERSTANDING_SERIES_DIR or run this script from inside the repo."
+}
+
+PARENT_REPO_DIR="$(resolve_parent_repo_dir)"
 # ---------------------
 
 # --- Helper Functions for Colored Output ---
@@ -40,15 +67,16 @@ print_error() {
 }
 # -----------------------------------------
 
-check_prerequisites() {
+require_gh() {
     if ! command -v gh &> /dev/null; then
         print_error "GitHub CLI ('gh') is not installed. Please install it to continue."
     fi
+}
 
+check_prerequisites() {
     if [ ! -d "$PARENT_REPO_DIR" ]; then
         print_error "Parent repository directory not found at '$PARENT_REPO_DIR'."
     fi
-
     cd "$PARENT_REPO_DIR"
 }
 
@@ -72,6 +100,7 @@ cmd_create() {
         print_error "Usage: $0 create <new-repo-name>"
     fi
 
+    require_gh
     check_prerequisites
     ensure_clean_main
 
@@ -140,6 +169,32 @@ cmd_status() {
 }
 
 # ==============================================================================
+# Command: remove
+# ==============================================================================
+cmd_remove() {
+    local REPO_NAME=$1
+    if [ -z "$REPO_NAME" ]; then
+        print_error "Usage: $0 remove <repo-name>"
+    fi
+
+    check_prerequisites
+    ensure_clean_main
+
+    if [ ! -d "$REPO_NAME" ]; then
+        print_error "No submodule directory named '$REPO_NAME' found."
+    fi
+
+    print_info "De-initializing '$REPO_NAME'..."
+    git submodule deinit -f -- "$REPO_NAME"
+    rm -rf ".git/modules/$REPO_NAME"
+    git rm -f "$REPO_NAME"
+
+    print_info "Committing removal..."
+    git commit -m "fix: Remove $REPO_NAME submodule"
+    print_success "Done! Run 'git push' when ready to publish."
+}
+
+# ==============================================================================
 # Dispatch
 # ==============================================================================
 COMMAND=${1:-help}
@@ -155,13 +210,17 @@ case "$COMMAND" in
     status)
         cmd_status
         ;;
+    remove)
+        cmd_remove "$@"
+        ;;
     *)
-        echo "Usage: $0 {create|update|status} [args]"
+        echo "Usage: $0 {create|update|status|remove} [args]"
         echo ""
         echo "Commands:"
         echo "  create <repo-name>   Create a new GitHub repo and add it as a submodule"
         echo "  update               Update all submodules to latest remote main"
         echo "  status               Show sync status of every submodule"
+        echo "  remove <repo-name>   Cleanly de-init and remove a submodule"
         exit 1
         ;;
 esac
