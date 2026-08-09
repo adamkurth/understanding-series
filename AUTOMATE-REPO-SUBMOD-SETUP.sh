@@ -5,13 +5,16 @@
 #
 # Commands:
 #   create <repo-name>   Create a new GitHub repo and add it as a submodule
-#   update                Update all submodules to latest remote main
+#   update [--force]      Update all submodules to latest remote main.
+#                          Aborts if any submodule has uncommitted local changes;
+#                          pass --force to hard-reset those to origin/main instead.
 #   status                Show the sync status of every submodule
 #   remove <repo-name>    Cleanly de-init and remove a submodule
 #
 # Usage:
 #   ./AUTOMATE-REPO-SUBMOD-SETUP.sh create <new-repo-name>
 #   ./AUTOMATE-REPO-SUBMOD-SETUP.sh update
+#   ./AUTOMATE-REPO-SUBMOD-SETUP.sh update --force
 #   ./AUTOMATE-REPO-SUBMOD-SETUP.sh status
 #   ./AUTOMATE-REPO-SUBMOD-SETUP.sh remove <repo-name>
 #
@@ -127,8 +130,53 @@ cmd_create() {
 # ==============================================================================
 # Command: update
 # ==============================================================================
+
+# Print the name of every submodule with uncommitted changes (staged, unstaged,
+# or untracked), one per line. Empty output means everything is clean.
+find_dirty_submodules() {
+    git submodule foreach --quiet '
+        if ! git diff --quiet || ! git diff --cached --quiet || [ -n "$(git status --porcelain --untracked-files=normal)" ]; then
+            echo "$name"
+        fi
+    '
+}
+
 cmd_update() {
+    local FORCE=false
+    if [ "$1" = "--force" ]; then
+        FORCE=true
+    fi
+
     check_prerequisites
+
+    print_info "Checking for local changes inside submodules..."
+    local DIRTY
+    DIRTY="$(find_dirty_submodules)"
+
+    if [ -n "$DIRTY" ]; then
+        if [ "$FORCE" = false ]; then
+            print_warn "The following submodules have uncommitted local changes:"
+            echo "$DIRTY" | sed 's/^/    - /'
+            print_error "Aborting. Commit/push or discard those changes yourself, or re-run with 'update --force' to hard-reset them to origin/main (this DESTROYS the local changes listed above)."
+        else
+            print_warn "Force mode: hard-resetting dirty submodules to origin/main, discarding local changes:"
+            echo "$DIRTY" | sed 's/^/    - /'
+            while IFS= read -r name; do
+                [ -z "$name" ] && continue
+                (
+                    cd "$name"
+                    BRANCH=$(git config -f "$PARENT_REPO_DIR/.gitmodules" --get "submodule.$name.branch" 2>/dev/null || echo "main")
+                    git fetch origin
+                    git checkout "$BRANCH"
+                    git reset --hard "origin/$BRANCH"
+                    git clean -fd
+                )
+            done <<< "$DIRTY"
+            print_success "Dirty submodules reset."
+        fi
+    else
+        print_success "No local changes in any submodule."
+    fi
 
     print_info "Fetching latest for all submodules..."
     git submodule sync
@@ -205,7 +253,7 @@ case "$COMMAND" in
         cmd_create "$@"
         ;;
     update)
-        cmd_update
+        cmd_update "$@"
         ;;
     status)
         cmd_status
@@ -218,7 +266,8 @@ case "$COMMAND" in
         echo ""
         echo "Commands:"
         echo "  create <repo-name>   Create a new GitHub repo and add it as a submodule"
-        echo "  update               Update all submodules to latest remote main"
+        echo "  update [--force]     Update all submodules to latest remote main"
+        echo "                       (--force hard-resets any submodule with local changes)"
         echo "  status               Show sync status of every submodule"
         echo "  remove <repo-name>   Cleanly de-init and remove a submodule"
         exit 1
